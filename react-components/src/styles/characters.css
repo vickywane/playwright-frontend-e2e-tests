@@ -1,0 +1,39 @@
+.list {
+    list-style: none;
+    display: grid; 
+    grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+    grid-gap: 3rem 2rem;
+}
+
+.card {
+    max-width: 350px;
+    border: 1px solid #000;
+    border-radius: 3px;
+}
+
+.details-container {    
+    padding: 0 20px;
+}
+
+.character-img {
+    width: 100%;
+}
+
+form {
+    display: flex;
+    justify-content: center;
+}
+
+.title {
+    text-align: center;
+    font-size: 3rem;
+}
+
+.character-input {
+    padding: 0 15px;
+    border: 1px solid #000;
+    border-radius: 2px;
+    height: 40px;
+    width: 400px;
+    margin: 0 30px;
+}
