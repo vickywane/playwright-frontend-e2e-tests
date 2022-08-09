@@ -37,3 +37,33 @@ form {
     width: 400px;
     margin: 0 30px;
 }
+
+button {
+    height: 45px;
+    width: 100%;
+    font-size: 16px;
+    margin-bottom: 16px ;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.align-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+select {
+    height: 40px;
+    width: 100px;
+    border-radius: 5px;
+    font-size: 14px;
+    margin-left: 10px;
+}

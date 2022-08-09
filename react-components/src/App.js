@@ -3,7 +3,7 @@ import './App.css';
 import "./styles/characters.css"
 import { ApiClient } from './apiClient'
 
-const Character = ({ name, specie, type, gender, image }) => (
+export const Character = ({ name, specie, type, gender, image }) => (
   <div className="card" >
     <img className="character-img" alt={`${name} character`} src={image} />
 
@@ -16,22 +16,29 @@ const Character = ({ name, specie, type, gender, image }) => (
   </div>
 )
 
-const SearchField = ({ handleSearchText, executeSearch }) => {
+export const SearchField = ({ executeSearch }) => {
+  const [searchText, setSearchText] = React.useState('')
+
   return (
     <form onSubmit={(e) => {
-      executeSearch()
+      executeSearch(searchText)
       e.preventDefault()
     }}>
       <input
+        value={searchText}
         onChange={(e) => {
-          handleSearchText(e.target.value)
+          setSearchText(e.target.value)
           e.preventDefault()
         }}
         className="character-input"
+        id="search-field"
         placeholder="Type in character name"
       />
 
-      <button onClick={() => executeSearch()}>
+      <button
+       disabled={searchText <= 2} 
+       id="find"
+       onClick={() => executeSearch(searchText)}>
         Find Character
       </button>
     </form>
@@ -40,7 +47,6 @@ const SearchField = ({ handleSearchText, executeSearch }) => {
 
 function App() {
   const [characters, setCharacters] = React.useState(null)
-  const [searchText, setSearchText] = React.useState('')
 
   const Client = new ApiClient()
 
@@ -65,9 +71,7 @@ function App() {
           </div>
           :
           <div>
-            <SearchField
-              executeSearch={() => fetchData(searchText)}
-              handleSearchText={(text) => setSearchText(text)}
+            <SearchField executeSearch={(text) => fetchData(text)}
             />
             <br />
             <hr />

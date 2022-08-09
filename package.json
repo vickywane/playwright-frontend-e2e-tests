@@ -2,11 +2,18 @@
   "name": "components-workspace",
   "version": "1.0.0",
   "main": "index.js",
+  "scripts": {
+    "start:all": "concurrently \"cd ./react-components && yarn start\" \"cd ./vue-components && yarn serve --port 4040\" \"cd ./svelte-components && yarn dev --port 5050\""
+  },
   "license": "MIT",
   "private": true,
   "workspaces": [
     "vue-components",
     "react-components",
     "svelte-components"
-  ]
+  ],
+  "dependencies": { 
+    "concurrently": "^7.3.0"
+  }
 }
+ 

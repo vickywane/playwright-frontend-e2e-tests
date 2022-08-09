@@ -1,50 +1,56 @@
 <script>
-	import successkid from 'images/successkid.jpg';
+	import { onMount } from "svelte";
+	import { ApiClient } from "react-components/src/apiClient";
+	import "react-components/src/styles/characters.css";
+	import Character from "./character.svelte";
+	import Paginator from "../components/Paginator.svelte";
+
+	const client = new ApiClient();
+	let characterData = [];
+
+	onMount(async () => await fetchCharacters());
+
+	const fetchCharacters = async (pageNo) => {
+		try {
+			const data = await client.fetchCharacter(null, pageNo);
+
+			characterData = data;
+		} catch (e) {
+			console.log(e);
+		}
+	};
 </script>
 
-<style>
-	h1, figure, p {
-		text-align: center;
-		margin: 0 auto;
-	}
-
-	h1 {
-		font-size: 2.8em;
-		text-transform: uppercase;
-		font-weight: 700;
-		margin: 0 0 0.5em 0;
-	}
-
-	figure {
-		margin: 0 0 1em 0;
-	}
-
-	img {
-		width: 100%;
-		max-width: 400px;
-		margin: 0 0 1em 0;
-	}
-
-	p {
-		margin: 1em auto;
-	}
-
-	@media (min-width: 480px) {
-		h1 {
-			font-size: 4em;
-		}
-	}
-</style>
-
 <svelte:head>
-	<title>Sapper project template</title>
+	<title>Rick and Morty Playwright</title>
 </svelte:head>
 
-<h1>Great success!</h1>
+<div>
+	<h1 id="title" class="title">Rick and Morty</h1>
 
-<figure>
-	<img alt="Success Kid" src="{successkid}">
-	<figcaption>Have fun with Sapper!</figcaption>
-</figure>
+	{#if characterData.length < 1}
+		<div>Loading Characters</div>
+	{:else}
+		<div>
+			<Paginator
+				pagesCount={42}
+				handlePageSelect={(number) => fetchCharacters(number)}
+			/>
 
-<p><strong>Try editing this file (src/routes/index.svelte) to test live reloading.</strong></p>
+			<ul class="list">
+				{#each characterData as character}
+					<li>
+						<Character
+							name={character.name}
+							type={character.type}
+							gender={character.gender}
+							specie={character.specie}
+							link={character.origin.url}
+							image={character.image}
+						/>
+					</li>
+				{/each}
+			</ul>
+		</div>
+	{/if}
+</div>
